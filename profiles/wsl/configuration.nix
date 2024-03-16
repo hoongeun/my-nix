@@ -1,8 +1,11 @@
-{ lib, pkgs, systemSettings, userSettings, ... }
+{ lib, pkgs, systemSettings, userSettings, ... }:
 
 with lib;
 let
-  nixos-wsl = import ./nixos-wsl;
+  nixos-wsl = import ( fetchGit {
+     url = "https://github.com/nix-community/NixOS-WSL";
+     rev = "34eda458bd3f6bad856a99860184d775bc1dd588"; # 23.11
+  });
 in
 {
   imports = [
@@ -22,7 +25,7 @@ in
     enable = true;
     automountPath = "/mnt";
     defaultUser = userSettings.username;
-    startMenuLauncher = true;
+    startMenuLaunchers = true;
     # docker-native.enable = true;
     # docker-desktop.enable = true;
   };
@@ -82,4 +85,6 @@ in
       pkgs.xdg-desktop-portal-gtk
     ];
   };
+
+  system.stateVersion = "23.11";
 }

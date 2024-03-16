@@ -8,13 +8,14 @@
       hostname = "hoongeun";
       profile = "wsl";
       timezone = "Asia/Seoul";
+      locale = "en_US.UTF-8";
     };
 
     userSettings = rec {
       username = "hoongeun";
       name = "Hoongeun";
       email = "me@hoongeun.com";
-      dotfileDirs = "~/.my-nix";
+      dotfileDirs = "~/.dotfiles";
       editor = "hx";
     };
 
@@ -57,7 +58,7 @@
     nixosConfigurations = {
       system = lib.nixosSystem {
         system = systemSettings.system;
-        modules = [ (./. + "/profiles"+("/"+systemSettings.profiel)+"configurations.nix") ];
+        modules = [ (./. + "/profiles"+("/"+systemSettings.profile)+"/configuration.nix") ];
         specialArgs = {
           inherit pkgs;
           inherit systemSettings;
