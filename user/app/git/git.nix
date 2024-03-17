@@ -1,4 +1,4 @@
-{ config, pkgs, userSettings, ... };
+{ config, pkgs, userSettings, ... }:
 
 {
   home.packages = with pkgs; [
@@ -12,6 +12,6 @@
     extraConfig = {
       init.defaultBranch = "main";
       safe.directory = "/home/" + userSettings.username + "/.dotfiles";
-    }
+    };
   };
 }

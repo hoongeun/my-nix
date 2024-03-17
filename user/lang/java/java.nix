@@ -2,6 +2,6 @@
 
 {
   home.packages = with pkgs; [
-    openjdk17-bootstap
+    openjdk17-bootstrap
   ];
 }

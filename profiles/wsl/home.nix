@@ -9,7 +9,6 @@
   imports = [
               ../../user/shell/sh.nix
               ../../user/shell/useful-cli.nix
-              ../../user/app/ranger/ranger.nix
               ../../user/app/git/git.nix
               ../../user/lang/cc/cc.nix
               ../../user/lang/go/go.nix
@@ -23,11 +22,6 @@
   home.stateVersion = "23.11";
 
   home.packages = [
-    # Core
-    pkgs-stable.fish
-    pkgs-stable.starship
-    pkgs-stable.git
-
     # Office
     pkgs-stable.libreoffice-fresh
 
@@ -64,5 +58,4 @@
   home.sessionVariables = {
     EDITOR = userSettings.editor;
   };
-
 }
