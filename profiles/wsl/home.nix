@@ -1,4 +1,4 @@
-{ config, pkgs, pkgs-stable, nix-doom-emacs, stylix, userSettings, ... }:
+{ config, pkgs, pkgs-stable, userSettings, ... }:
 
 {
   home.username = userSettings.username;

@@ -23,7 +23,7 @@ in
 
   wsl = {
     enable = true;
-    automountPath = "/mnt";
+    wslConf.automount.root = "/mnt";
     defaultUser = userSettings.username;
     startMenuLaunchers = true;
     # docker-native.enable = true;
@@ -51,10 +51,10 @@ in
     LC_MEASUREMENT = systemSettings.locale;
     LC_MONETARY = systemSettings.locale;
     LC_NAME = systemSettings.locale;
-    LC_NUMERIC = systemSettings.locale;
+    # LC_NUMERIC = systemSettings.locale;
     LC_PAPER = systemSettings.locale;
     LC_TELEPHONE = systemSettings.locale;
-    LC_TIME = systemSettings.locale;
+    # LC_TIME = systemSettings.locale;
   };
 
   users.users.${userSettings.username} = {
@@ -66,7 +66,7 @@ in
   };
 
   environment.systemPackages = [
-    pkgs.hx
+    pkgs-stable.helix
     pkgs-stable.neovim
     pkgs-stable.wget
     pkgs-stable.curl
@@ -78,14 +78,6 @@ in
   environment.shells = [ pkgs-stable.fish ];
   users.defaultUserShell = pkgs-stable.fish;
   programs.fish.enable = true;
-
-  xdg.portal = {
-    enable = true;
-    extraPortals = [
-      pkgs-stable.xdg-desktop-portal
-      pkgs-stable.xdg-desktop-portal-gtk
-    ];
-  };
 
   system.stateVersion = "23.11";
 }

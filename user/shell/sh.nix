@@ -68,5 +68,6 @@ in
     bat eza bottom fd 
     gnugrep gnused
     direnv nix-direnv
+    ripgrep
   ];
 }
