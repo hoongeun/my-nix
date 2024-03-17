@@ -12,6 +12,9 @@ in
   programs.fish = {
     enable = true;
     shellAliases = myAlias;
+    shellInit = ''
+      set -x NNN_FIFO '/tmp/nnn.fifo'
+    '';
   };
 
   programs.bash = {
@@ -39,6 +42,16 @@ in
         line-number = "relative";
         true-color = true;
         lsp.display-messages = true;
+        whitespace = {
+          render = "all";
+          characters = {
+            nbsp = "⍽";
+            tab = "→";
+            newline = "⏎";
+            tabpad = "·";
+          };
+        };
+        insert-final-newline = true;
       };
     };
     defaultEditor = true;

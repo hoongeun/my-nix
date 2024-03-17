@@ -1,12 +1,17 @@
 { config, pkgs, userSettings, ... }:
 
 {
+  home.packages = with pkgs; [
+    tree
+    glow
+    poppler
+  ];
   programs.nnn = {
     enable = true;
     extraPackages = with pkgs; [
-      tree
-      glow
-      poppler
+      ffmpegthumbnailer
+      mediainfo
+      sxiv
     ];
     plugins = {
       src = (pkgs.fetchFromGitHub {
