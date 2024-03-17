@@ -1,4 +1,4 @@
-{ config, pkgs, nix-doom-emacs, stylix, userSettings, ... }:
+{ config, pkgs, pkgs-stable, nix-doom-emacs, stylix, userSettings, ... }:
 
 {
   home.username = userSettings.username;
@@ -20,20 +20,21 @@
               ../../user/lang/rust/rust.nix
             ];
 
-  home.stateVersion = "22.11"; # Please read the comment before changing.
+  home.stateVersion = "23.11";
 
-  home.packages = with pkgs; [
+  home.packages = [
     # Core
-    fish
-    starship
-    git
+    pkgs-stable.fish
+    pkgs-stable.starship
+    pkgs-stable.git
 
     # Office
-    libreoffice-fresh
+    pkgs-stable.libreoffice-fresh
 
     # Various dev packages
-    texinfo
-    libffi zlib
+    pkgs-stable.texinfo
+    pkgs-stable.libffi
+    pkgs-stable.zlib
   ];
 
   services.syncthing.enable = true;

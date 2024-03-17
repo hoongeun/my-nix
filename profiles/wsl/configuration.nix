@@ -1,4 +1,4 @@
-{ lib, pkgs, systemSettings, userSettings, ... }:
+{ lib, pkgs, pkgs-stable, systemSettings, userSettings, ... }:
 
 with lib;
 let
@@ -32,7 +32,7 @@ in
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  nix.package = pkgs.nixFlakes;
+  nix.package = pkgs-stable.nixFlakes;
   nix.extraOptions = ''
     experimental-features = nix-command flakes
   '';
@@ -65,24 +65,25 @@ in
     uid = 1000;
   };
 
-  environment.systemPackages = with pkgs; [
-    hx
-    wget
-    curl
-    fish
-    git
-    home-manager
+  environment.systemPackages = [
+    pkgs.hx
+    pkgs-stable.neovim
+    pkgs-stable.wget
+    pkgs-stable.curl
+    pkgs-stable.fish
+    pkgs-stable.git
+    pkgs-stable.home-manager
   ];
 
-  environment.shells = with pkgs; [ fish ];
-  users.defaultUserShell = pkgs.fish;
+  environment.shells = [ pkgs-stable.fish ];
+  users.defaultUserShell = pkgs-stable.fish;
   programs.fish.enable = true;
 
   xdg.portal = {
     enable = true;
     extraPortals = [
-      pkgs.xdg-desktop-portal
-      pkgs.xdg-desktop-portal-gtk
+      pkgs-stable.xdg-desktop-portal
+      pkgs-stable.xdg-desktop-portal-gtk
     ];
   };
 

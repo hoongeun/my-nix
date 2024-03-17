@@ -19,7 +19,16 @@
       editor = "hx";
     };
 
-    pkgs = import nixpkgs-stable {
+    pkgs = import nixpkgs {
+      system = systemSettings.system;
+      config = {
+        allowUnfree = true;
+        allowUnfreePredicate = (_: true);
+      };
+      overlays = [ rust-overlay.overlays.default ];
+    };
+
+    pkgs-stable = import nixpkgs-stable {
       system = systemSettings.system;
       config = {
         allowUnfree = true;
@@ -49,6 +58,7 @@
         modules = [ (./. + "/profiles"+("/"+systemSettings.profile)+"/home.nix") ];
         extraSpecialArgs = {
           inherit pkgs;
+          inherit pkgs-stable;
           inherit systemSettings;
           inherit userSettings;
         };
@@ -61,6 +71,7 @@
         modules = [ (./. + "/profiles"+("/"+systemSettings.profile)+"/configuration.nix") ];
         specialArgs = {
           inherit pkgs;
+          inherit pkgs-stable;
           inherit systemSettings;
           inherit userSettings;
         };
