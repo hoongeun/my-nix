@@ -10,6 +10,7 @@
               ../../user/shell/sh.nix
               ../../user/shell/useful-cli.nix
               ../../user/app/git/git.nix
+              ../../user/app/nnn/nnn.nix
               ../../user/lang/cc/cc.nix
               ../../user/lang/go/go.nix
               ../../user/lang/java/java.nix

@@ -34,7 +34,7 @@ in
   programs.helix = {
     enable = true;
     settings = {
-      theme = "material-darker";
+      theme = "material_darker";
       editor = {
         line-number = "relative";
         true-color = true;
