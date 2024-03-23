@@ -57,6 +57,7 @@ in
     defaultEditor = true;
     extraPackages = with pkgs; [
       clang-tools
+      lldb
       gopls
       jdt-language-server
       nodePackages.typescript-language-server
