@@ -14,6 +14,14 @@ in
     shellAliases = myAlias;
     shellInit = ''
       set -x NNN_FIFO '/tmp/nnn.fifo'
+      function yy
+        set tmp (mktemp -t "yazi-cwd.XXXXX")
+        yazi $argv --cwd-file="$tmp"
+        if set cwd (cat -- "$tmp"); and [ -n "$cwd" ]; and [ "$cwd" != "$PWD" ]
+          cd -- "$cwd"
+        end
+        rm -f -- "$tmp"
+      end
     '';
   };
 
@@ -73,6 +81,16 @@ in
     ];
   };
 
+  programs.yazi = {
+    enable = true;
+    enableBashIntegration = true;
+    enableFishIntegration = true;
+    theme = builtins.fromTOML(builtins.readFile(builtins.fetchurl {
+      url = "https://raw.githubusercontent.com/yazi-rs/flavors/main/catppuccin-frappe/theme.toml";
+      sha256 = "074f24d0apc6wkx0maz3dxgjqwhhm0mgb1r0csdir9zbjflhfald";
+    }));
+  };
+
   home.packages = with pkgs; [
     bat eza bottom fd
     gnugrep gnused
@@ -82,5 +100,6 @@ in
     fzf
     fishPlugins.grc
     grc
+    jq fd zoxide
   ];
 }
