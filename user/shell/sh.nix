@@ -7,6 +7,7 @@ let
     nixos-rebuild = "systemd-run --no-ask-password --uid=0 --system --scope -p MemoryLimit=16000M -p CPUQuota=60% nixos-rebuild";
     home-manager = "systemd-run --no-ask-password --uid=1000 --user --scope -p MemoryLimit=16000M -p CPUQuota=60% home-manager";
   };
+  yaziFlavorsDir = "${config.home.homeDirectory}/.config/yazi/flavors";
 in
 {
   programs.fish = {
@@ -85,11 +86,19 @@ in
     enable = true;
     enableBashIntegration = true;
     enableFishIntegration = true;
-    theme = builtins.fromTOML(builtins.readFile(builtins.fetchurl {
-      url = "https://raw.githubusercontent.com/yazi-rs/flavors/main/catppuccin-frappe/theme.toml";
-      sha256 = "074f24d0apc6wkx0maz3dxgjqwhhm0mgb1r0csdir9zbjflhfald";
-    }));
+    theme = ''
+      [flavor]
+      use = "catppuccin-frappe"
+    '';
   };
+
+  home.activation.cloneYaziFlavors = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    if [ ! -d ${yaziFlavorsDir} ]; then
+      git clone https://github.com/yazi-rs/flavors ${yaziFlavorsDir}
+    else
+      echo "Yazi flavors directory already exists."
+    fi
+  '';
 
   home.packages = with pkgs; [
     bat eza bottom fd
