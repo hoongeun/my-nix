@@ -23,9 +23,6 @@
   home.stateVersion = "23.11";
 
   home.packages = [
-    # Office
-    pkgs-stable.libreoffice-fresh
-
     # Various dev packages
     pkgs-stable.texinfo
     pkgs-stable.libffi

@@ -1,7 +1,7 @@
 {
   description = "A very basic flake";
 
-  outputs = inputs@{ self, nixpkgs, nixpkgs-stable, home-manager, rust-overlay }:
+  outputs = inputs@{ self, nixpkgs, nixpkgs-stable, home-manager, rust-overlay, yazi }:
   let
     systemSettings = {
       system = "x86_64-linux";
@@ -25,7 +25,10 @@
         allowUnfree = true;
         allowUnfreePredicate = (_: true);
       };
-      overlays = [ rust-overlay.overlays.default ];
+      overlays = [
+        rust-overlay.overlays.default
+        yazi.overlays.default
+      ];
     };
 
     pkgs-stable = import nixpkgs-stable {
@@ -33,7 +36,10 @@
       config = {
         allowUnfree = true;
         allowUnfreePredicate = (_: true);
-        overlays = [ rust-overlay.overlays.default ];
+        overlays = [
+          rust-overlay.overlays.default
+          yazi.overlays.default
+        ];
       };
     };
 
@@ -104,5 +110,7 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     rust-overlay.url = "github:oxalica/rust-overlay";
+
+    yazi.url = "github:sxyazi/yazi";
   };
 }

@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 let
   myAlias = {
     ls = "eza --icons -l -T -L=1";
@@ -7,7 +7,12 @@ let
     nixos-rebuild = "systemd-run --no-ask-password --uid=0 --system --scope -p MemoryLimit=16000M -p CPUQuota=60% nixos-rebuild";
     home-manager = "systemd-run --no-ask-password --uid=1000 --user --scope -p MemoryLimit=16000M -p CPUQuota=60% home-manager";
   };
-  yaziFlavorsDir = "${config.home.homeDirectory}/.config/yazi/flavors";
+  flavorsRepo = pkgs.fetchFromGitHub {
+    owner = "yazi-rs";
+    repo = "flavors";
+    rev = "6394c3904ca6bd31ba1d600ef8e5488d7dfad374";
+    sha256 = "f4jjJOQOxQz19M/oWk8QiuMoDysiae040K+P9qbLD5U=";
+  };
 in
 {
   programs.fish = {
@@ -86,19 +91,14 @@ in
     enable = true;
     enableBashIntegration = true;
     enableFishIntegration = true;
-    theme = ''
-      [flavor]
-      use = "catppuccin-frappe"
-    '';
+    theme = {
+      flavor = {
+        use = "catppuccin-frappe";
+      };
+    };
   };
 
-  home.activation.cloneYaziFlavors = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    if [ ! -d ${yaziFlavorsDir} ]; then
-      git clone https://github.com/yazi-rs/flavors ${yaziFlavorsDir}
-    else
-      echo "Yazi flavors directory already exists."
-    fi
-  '';
+  home.file.".config/yazi/flavors".source = flavorsRepo;
 
   home.packages = with pkgs; [
     bat eza bottom fd
